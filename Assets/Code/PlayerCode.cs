@@ -2,21 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
+
 
 public class PlayerCode : MonoBehaviour
 {
     NavMeshAgent _navAgent;
 
     Camera mainCam;
-    // Start is called before the first frame update
-    
+
+    public TextMeshProUGUI scoreUI;
+
+
+    public static class PublicVars 
+    {
+        public static int score = 0;
+    }
+
     void Start()
     {
         _navAgent = GetComponent<NavMeshAgent>();
         mainCam = Camera.main;
+        scoreUI.text = "Score: " + PublicVars.score;
     }
 
-    private void Update() {
+    private void Update() 
+    {
         {
             if(Input.GetMouseButtonDown(0))
             {
@@ -26,6 +37,22 @@ public class PlayerCode : MonoBehaviour
                     _navAgent.destination = hit.point;
                 }
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {    
+        if(other.CompareTag("Coin"))
+        {
+            Destroy(other.gameObject);
+            PublicVars.score++;
+            scoreUI.text = "Gold: " + PublicVars.score;
+        }
+
+        if(other.CompareTag("BlueKey"))
+        {
+            Destroy(other.gameObject);
+            scoreUI.text += "Blue Key";
         }
     }
 }
