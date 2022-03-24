@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerCode : MonoBehaviour
@@ -12,7 +13,7 @@ public class PlayerCode : MonoBehaviour
     Camera mainCam;
 
     public TextMeshProUGUI scoreUI;
-
+    bool isAlive = true;
 
     public static class PublicVars 
     {
@@ -39,6 +40,16 @@ public class PlayerCode : MonoBehaviour
             }
         }
     }
+
+    /* //for player death
+    private void FixedUpdate() {
+        if (isAlive && transform.position.y < -20)
+        {
+            isAlive = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+    */
 
     private void OnTriggerEnter(Collider other) 
     {    
